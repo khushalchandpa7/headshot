@@ -9,6 +9,21 @@ import { ModeToggle } from "@/components/ModeToggle";
 // Webhook URL constant
 const WEBHOOK_URL = "http://localhost:5678/webhook/headshot-generator-agent";
 
+const EXAMPLES = [
+  {
+    original: "/dist/assets/original1.jpg",
+    generated: "/dist/assets/generated1.png",
+  },
+  {
+    original: "/dist/assets/original2.jpg",
+    generated: "/dist/assets/generated2.png",
+  },
+  {
+    original: "/dist/assets/original3.jpg",
+    generated: "/dist/assets/generated3.png",
+  },
+];
+
 const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
@@ -92,7 +107,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b-2 border-foreground">
+      <header className="sticky top-0 z-50 w-full border-b-2 border-foreground bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-foreground">
@@ -112,7 +127,7 @@ const Index = () => {
       <section className="border-b-2 border-foreground">
         <div className="container mx-auto px-6 py-16 md:py-24">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary border-2 border-foreground shadow-xs">
+            <div className="rounded-full inline-flex items-center gap-2 px-4 py-2 bg-secondary border-2 border-foreground shadow-xs">
               <Zap className="w-4 h-4" />
               <span className="text-sm font-medium">Powered by AI</span>
             </div>
@@ -182,6 +197,63 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Community Showcase Section */}
+      <section className="border-b-2 border-foreground bg-background">
+        <div className="max-w-[1400px] mx-auto px-4 pt-10 pb-20 md:pt-12 md:pb-32">
+          <div className="text-center space-y-4 mb-16 md:mb-24">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
+              Made by Headshot.AI
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Join thousands of professionals upgrading their presence.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {EXAMPLES.map((example, index) => (
+              <div
+                key={index}
+                className="p-2 md:p-3 border-2 border-foreground bg-card shadow-sm hover:shadow-md transition-all group"
+              >
+                <div className="flex items-center justify-between gap-1 mb-2">
+                  <div className="flex-1 space-y-1">
+                    <div className="aspect-[3/4] overflow-hidden border-2 border-foreground bg-secondary">
+                      <img
+                        src={example.original}
+                        alt="Original"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground text-center">
+                      Original
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="p-1.5 bg-foreground text-background rounded-full group-hover:scale-110 transition-transform">
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 space-y-1">
+                    <div className="aspect-[3/4] overflow-hidden border-2 border-foreground bg-secondary">
+                      <img
+                        src={example.generated}
+                        alt="Result"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-tighter text-muted-foreground text-center">
+                      Result
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="border-b-2 border-foreground">
         <div className="container mx-auto px-6 py-16">
@@ -190,9 +262,9 @@ const Index = () => {
               <div className="p-3 bg-foreground text-background w-fit mb-4">
                 <Zap className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-lg mb-2">Lightning Fast</h3>
+              <h3 className="font-bold text-lg mb-2">Fast</h3>
               <p className="text-sm text-muted-foreground">
-                Get your professional headshot in under 30 seconds with our
+                Get your professional headshot in under 60 seconds with our
                 optimized AI pipeline.
               </p>
             </div>
