@@ -75,6 +75,12 @@ export const Navbar = () => {
               >
                 Generate
               </Link>
+              <Link
+                to="/pricing"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
+                Pricing
+              </Link>
               <div className="flex items-center gap-2 px-3 py-1 bg-secondary rounded-full border border-border">
                 <Sparkles className="w-3 h-3 text-yellow-500" />
                 <span className="text-sm font-bold">
@@ -197,6 +203,13 @@ export const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   Generate Headshot
+                </Link>
+                <Link
+                  to="/pricing"
+                  className="text-sm font-medium hover:underline underline-offset-4"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Pricing
                 </Link>
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <span className="text-sm font-medium">Theme</span>
