@@ -7,8 +7,10 @@ import ResultDisplay from "@/components/ResultDisplay";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Generate = () => {
+  const { refreshUser } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,12 +74,16 @@ const Generate = () => {
         title: "Headshot generated!",
         description: `Your AI headshot is ready. Credits remaining: ${result.creditsRemaining}`,
       });
-    } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.error || err.message || "Something went wrong";
-      const errorDetail = err.response?.data?.message || "";
 
-      setError(`${errorDetail}: ${errorMessage}`);
+      // Refresh user profile to update credits in Navbar
+      refreshUser();
+    } catch (err: any) {
+      const serverMessage =
+        err.response?.data?.message || err.response?.data?.error;
+      const errorMessage =
+        serverMessage || err.message || "Something went wrong";
+
+      setError(errorMessage);
       toast({
         title: "Generation failed",
         description: errorMessage,
@@ -130,7 +136,7 @@ const Generate = () => {
                 "Generating..."
               ) : (
                 <>
-                  Generate Headshot
+                  Generate Headshot (25 Credits)
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}

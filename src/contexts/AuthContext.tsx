@@ -20,6 +20,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<any>;
   signup: (name: string, email: string, password: string) => Promise<any>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -88,6 +89,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
   };
 
+  const refreshUser = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const { data } = await api.get("/user/profile");
+        setUser(data);
+        localStorage.setItem("headshot_user", JSON.stringify(data));
+      } catch (error) {
+        console.error("Failed to refresh user profile:", error);
+      }
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -96,6 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         signup,
         logout,
+        refreshUser,
         isAuthenticated: !!user,
       }}
     >

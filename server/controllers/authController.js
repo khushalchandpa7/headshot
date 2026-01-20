@@ -31,7 +31,7 @@ const registerUser = async (req, res) => {
     name,
     email,
     password,
-    credits: 5, // Default credits
+    credits: 25, // Default credits (Free Trial)
   });
 
   if (user) {

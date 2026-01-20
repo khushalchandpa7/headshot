@@ -30,9 +30,11 @@ const createHeadshot = async (req, res) => {
       throw new Error("User not found");
     }
     console.log("User credits:", user.credits);
-    if (user.credits < 1) {
+    if (user.credits < 25) {
       fs.unlinkSync(req.file.path);
-      return res.status(403).json({ message: "Insufficient credits" });
+      return res
+        .status(403)
+        .json({ message: "Insufficient credits (Minimum 25 required)" });
     }
 
     // 2. Prepare Form Data for AI Webhook
@@ -90,7 +92,7 @@ const createHeadshot = async (req, res) => {
     }
 
     // 5. Deduct Credit & Save History
-    user.credits -= 1;
+    user.credits -= 25;
     await user.save();
 
     console.log("Saving headshot history for user:", user._id);
