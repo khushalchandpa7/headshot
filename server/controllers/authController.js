@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const config = require("../config/config");
 
 // Generate JWT
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || "dev_secret_key_123", {
+  return jwt.sign({ id }, config.jwtSecret, {
     expiresIn: "30d",
   });
 };

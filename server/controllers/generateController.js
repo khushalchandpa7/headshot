@@ -3,9 +3,7 @@ const FormData = require("form-data");
 const fs = require("fs");
 const User = require("../models/User");
 const Headshot = require("../models/Headshot");
-
-// AI Webhook URL
-const AI_WEBHOOK_URL = "http://localhost:5678/webhook/headshot-generator-agent";
+const config = require("../config/config");
 
 // @desc    Generate a new headshot
 // @route   POST /api/generate/create
@@ -42,8 +40,8 @@ const createHeadshot = async (req, res) => {
     formData.append("image", fs.createReadStream(req.file.path));
 
     // 3. Proxy Request to AI Agent
-    console.log("Proxying request to AI Agent:", AI_WEBHOOK_URL);
-    const response = await axios.post(AI_WEBHOOK_URL, formData, {
+    console.log("Proxying request to AI Agent:", config.aiAgentUrl);
+    const response = await axios.post(config.aiAgentUrl, formData, {
       headers: {
         ...formData.getHeaders(),
       },

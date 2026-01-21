@@ -8,7 +8,7 @@ import {
 } from "react";
 
 interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   credits: number;
@@ -57,10 +57,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await api.post("/auth/login", { email, password });
       setUser(data);
       localStorage.setItem("headshot_user", JSON.stringify(data));
-      localStorage.setItem("token", data.token);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
       return data;
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (error: any) {
+      console.error("Login Error Details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url,
+      });
       throw error;
     }
   };
@@ -75,10 +82,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       setUser(data);
       localStorage.setItem("headshot_user", JSON.stringify(data));
-      localStorage.setItem("token", data.token);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
       return data;
-    } catch (error) {
-      console.error("Signup failed:", error);
+    } catch (error: any) {
+      console.error("Signup Error Details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url,
+      });
       throw error;
     }
   };

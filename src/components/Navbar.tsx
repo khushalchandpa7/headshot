@@ -46,12 +46,6 @@ export const Navbar = () => {
               >
                 Pricing
               </Link>
-              <Link
-                to="/#features"
-                className="text-sm font-medium hover:underline underline-offset-4"
-              >
-                Features
-              </Link>
               <div className="h-6 w-px bg-border" />
               <ModeToggle />
               <Button asChild variant="ghost">
@@ -146,13 +140,6 @@ export const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   Pricing
-                </Link>
-                <Link
-                  to="/#features"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Features
                 </Link>
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <span className="text-sm font-medium">Theme</span>
